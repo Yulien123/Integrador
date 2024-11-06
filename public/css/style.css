@@ -1,0 +1,20 @@
+tr.inactivo {
+    color: red;
+    text-decoration: line-through;
+}
+.img_dr {
+    width: 80px;
+    height: 80px;
+}
+.no-bullets {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  select {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  

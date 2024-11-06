@@ -1,0 +1,31 @@
+extends ../layout
+block contenido 
+    a(href="/usuarios/create" class="btn btn-success") Crear Usuario
+    if mensaje
+      .alert.alert-success
+        h1= mensaje
+        
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous")
+
+    table(class='table table-striped')   
+        thead 
+            tr
+                th Foto 
+                th id
+                th N° Documento
+                th Email 
+                th password 
+                th id_rol
+                th Acciones
+        tbody 
+            each usuario in usuarios
+                tr
+                    th 
+                        img(src="/images/user_icon_004.jpg", alt="alt" class="img_dr") 
+                    td= usuario.id
+                    td= usuario.dni
+                    th= usuario.email 
+                    th= usuario.password 
+                    th= usuario.id_rol
+                    td
+                        a(href=`/usuario/edit/${usuario.dni}` class="btn btn-info") Modificar

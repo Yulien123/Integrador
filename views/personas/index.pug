@@ -1,0 +1,32 @@
+extends ../layout
+block contenido 
+    a(href="/personas/create" class="btn btn-success") Crear Persona
+    if mensaje
+      .alert.alert-success
+        h1= mensaje
+        
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous")
+
+    table(class='table table-striped')   
+        thead 
+            tr
+                th Foto 
+                th N° Documento
+                th Nombre
+                th Apellido
+                th Fecha de Nacimiento
+                th Acciones
+        tbody 
+            each persona in personas 
+                tr
+                    th 
+                        img(src="/images/user_icon_004.jpg", alt="alt" class="img_dr") 
+                    td= persona.dni
+                    td= persona.nombre 
+                    td= persona.apellido
+                    td= persona.nacimiento
+                    td
+                        a(href=`/personas/edit/${persona.dni}` class="btn btn-info") Modificar
+                        
+                            
+                        

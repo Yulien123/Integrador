@@ -1,0 +1,55 @@
+extends ../layout
+block contenido
+    a(href="/medicos/create" class="btn btn-success") Crear Médico
+    if mensaje
+      .alert.alert-success
+        h1= mensaje
+        
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous")
+    table(class='table table-striped')   
+        thead 
+            tr 
+                th Foto
+                th Id
+                th N° Documento
+                th Nombre
+                th Apellido
+                th Fecha Nacimiento
+                th Correo
+                th Contra
+                th Rol
+                th Especialidades
+                th Matriculas
+                th Telefonos
+                th Estado
+                th Acciones
+        tbody 
+            each medico in medicos 
+                tr 
+                    th 
+                        img(src="/images/user_icon_004.jpg", alt="alt" class="img_dr") 
+                    td= medico.id
+                    td= medico.dni
+                    td= medico.nombre
+                    td= medico.apellido
+                    td= medico.nacimiento
+                    td= medico.email 
+                    td ******
+                    td Profesional
+                    td
+                        select
+                            each especialidad in medico.especialidades.split(', ')
+                                option= especialidad
+                    td
+                        select
+                            each matricula in medico.matriculas.split(', ')
+                                option= matricula
+                    td
+                        select
+                            each telefono in medico.telefonos.split(', ')
+                                option= telefono
+
+                    td= (medico.estado === 1) ? 'Activo' : 'Inactivo'
+                    td
+                       a(href=`/medicos/edit/${medico.dni}` class="btn btn-info") Gestionar
+                        
