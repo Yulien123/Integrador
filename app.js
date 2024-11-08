@@ -42,7 +42,7 @@ app.use((err, req, res, next) => {
 //gestion medicos
 app.use('/medicos', MedicosRouter);
 //Gestion especialidades
-//app.use('/especialidad', especialidadRoutes);
+app.use('/especialidad', especialidadRoutes);
 
 
 app.listen(PORT, () => {
