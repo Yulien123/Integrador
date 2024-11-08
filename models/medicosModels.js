@@ -190,7 +190,7 @@ class Medico extends Usuario {
         }
     }
     
-    //inactivo
+    //Acctivo
     static async activarMedico(id) {
         console.log('Model Medico: activar medico');
         try {
