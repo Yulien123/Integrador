@@ -10,14 +10,10 @@ const PORT = process.env.PORT ?? 3000
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-const MedicosRouter = require('./routes/medicosRoutes');
-const especialidadRoutes = require('./routes/especialidadRoutes');
-
-
-
+const MedicosRouter = require('./routes/medicosRoutes')
+const PacientesRouter = require('./routes/pacientesRoutes')
 app.set('view engine', 'pug')
 app.set('views', 'views')
-
 
 
 // Configurar Morgan para registrar solicitudes en la consola
@@ -37,12 +33,11 @@ app.use((err, req, res, next) => {
 
 //gestion personas
 //app.use('/personas', PersonasRouter)
-//gestion usuarios
+//gestios usuarios
 //app.use('/usuarios', UsuariosRouter)
 //gestion medicos
-app.use('/medicos', MedicosRouter);
-//Gestion especialidades
-//app.use('/especialidad', especialidadRoutes);
+app.use('/medicos', MedicosRouter)
+app.use('/pacientes', PacientesRouter)
 
 
 app.listen(PORT, () => {

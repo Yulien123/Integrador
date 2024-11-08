@@ -7,22 +7,6 @@ const { validateMedicos, validatePartialMedicos } = require('../schemas/validati
 const { obtenerFechaFormateada } = require('../utils/dateFormatter');
 
 class MedicosController {
-    //Mostrar especialidades
-    async getCreateForm(req, res, next) {
-        console.log('Controller: Especialidad get');
-        try {
-            const especialidades = await Especialidad.getAll();
-            if (especialidades) {
-                console.log('Especialidades enviadas al formulario');
-                res.render('medicos/crear', { especialidades });
-            } else {
-                res.status(404).json({ message: 'Error al cargar las especialidades al formulario crear' });
-            }
-        } catch (error) {
-            console.error('Error al obtener especialidades:', error);
-            next(error);
-        }
-    }
     //Mostrar todas los medicos
     async get(req, res, next) {
         console.log('Controller: Get All medicos');
@@ -51,6 +35,22 @@ class MedicosController {
             res.render('medicos/index', { medicos: medicosConFechaFormateada, mensaje });
         } catch (error) {
             console.error('Error al obtener medicos desde el controlador:', error);
+            next(error);
+        }
+    }
+     //Mostrar especialidades
+     async getCreateForm(req, res, next) {
+        console.log('Controller: Especialidad get');
+        try {
+            const especialidades = await Especialidad.getAll();
+            if (especialidades) {
+                console.log('Especialidades enviadas al formulario');
+                res.render('medicos/crear', { especialidades });
+            } else {
+                res.status(404).json({ message: 'Error al cargar las especialidades al formulario crear' });
+            }
+        } catch (error) {
+            console.error('Error al obtener especialidades:', error);
             next(error);
         }
     }
@@ -183,10 +183,6 @@ class MedicosController {
             }
             console.log('Controller Medico: Medico encontrado:', medico);
 
-            // Verificar y mostrar el estado del médico
-            const { estado } = medico;
-            console.log('estado medico antes:', estado);
-
             console.log('Enviando a la vista editar...');
 
             res.render('medicos/editar', { persona, usuario, idEspecialidad: medicoData[0].idEspecialidad, especialidades, matriculas, medico, telefonos });
@@ -261,17 +257,16 @@ class MedicosController {
         try {
             let flag = false
             const { dni } = req.params; // Asegúrate de que req.params.dni esté definido correctamente
-            console.log('dni', dni);
-    
-            // Obtener el usuario por DNI
-            const { usuario } = await Usuario.getByDni(dni);
-            if (!usuario) {
-                return res.status(404).json({ message: 'No se encontró el usuario con el DNI proporcionado' });
+            
+            //buscar id de usuario atravez del dni
+            const idUser = await Usuario.getByDni(dni)
+            if(!idUser) {
+                return res.status(404).json({ message: 'Error al bucar id usuario a inactivar en MedicoController' });
             }
-    
-            // Lógica para inactivar el médico
-            console.log('id', usuario.id);
-            const result = await Medico.inactivarMedico(usuario.id);
+            const { id } = idUser.usuario
+
+            //Inactivar el médico
+            const result = await Medico.inactivarMedico(id);
             if (!result) {
                 return res.status(404).json({ message: 'Error al inactivar el médico desde MedicoController' });
             }
@@ -281,7 +276,6 @@ class MedicosController {
             next(error);
         }
     }
-    
     // Activate
     async activar(req, res, next) {
         console.log('Controller: activar Medico');
@@ -290,15 +284,16 @@ class MedicosController {
             const { dni } = req.params; // Asegúrate de que req.params.dni esté definido correctamente
             console.log('dni', dni);
     
-            // Obtener el usuario por DNI
-            const { usuario } = await Usuario.getByDni(dni);
-            if (!usuario) {
-                return res.status(404).json({ message: 'No se encontró el usuario con el DNI proporcionado' });
+            
+            //buscar id de usuario atravez del dni
+            const idUser = await Usuario.getByDni(dni)
+            if(!idUser) {
+                return res.status(404).json({ message: 'Error al bucar id usuario a inactivar en MedicoController' });
             }
-    
-            // Lógica para inactivar el médico
-            console.log('id', usuario.id);
-            const result = await Medico.activarMedico(usuario.id);
+            const { id } = idUser.usuario
+            
+            //Activar el médico
+            const result = await Medico.activarMedico(id);
             if (!result) {
                 return res.status(404).json({ message: 'Error al activar el médico desde MedicoController' });
             }

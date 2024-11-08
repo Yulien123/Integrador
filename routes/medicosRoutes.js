@@ -27,4 +27,4 @@ MedicosRouter.post('/activar/:dni', MedicosControllers.activar)
 MedicosRouter.post('/inactivar/:dni', MedicosControllers.inactivar);
 
 
-module.exports = MedicosRouter;
+module.exports = MedicosRouter

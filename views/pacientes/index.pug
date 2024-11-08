@@ -1,0 +1,54 @@
+extends ../layout
+block contenido
+    a(href="/pacientes/create" class="btn btn-success") Crear Paciente
+    if mensaje
+      .alert.alert-success
+        h1= mensaje
+        
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous")
+    table(class='table table-striped')   
+        thead 
+            tr 
+                th Foto
+                th Id
+                th N° Documento
+                th Nombre
+                th Apellido
+                th Fecha Nacimiento
+                th Correo
+                th Contra
+                th Rol
+                th Telefonos
+                th Obras Sociales
+                th Acciones
+        tbody 
+            each paciente in pacientes 
+                tr 
+                    th 
+                        img(src="/images/user_icon_004.jpg", alt="alt" class="img_dr") 
+                    td= paciente.id
+                    td= paciente.dni
+                    td= paciente.nombre
+                    td= paciente.apellido
+                    td= paciente.nacimiento
+                    td= paciente.email 
+                    td= paciente.password
+                    td Paciente
+                    td
+                        select
+                            - if (paciente.telefonos)
+                                each telefono in paciente.telefonos.split(', ')
+                                    option= telefono
+                            - else
+                                    option No phone 
+                    td
+                        select 
+                            - if (paciente.obra_sociales)
+                                each obrasocial in paciente.obra_sociales.split(', ')
+                                    option= obrasocial
+                            - else  
+                                    option No Obrasocial
+                    td= (paciente.estado === 1) ? 'Activo' : 'Inactivo'
+                    td
+                       a(href=`/pacientes/edit/${paciente.dni}` class="btn btn-info") Gestionar
+                        
