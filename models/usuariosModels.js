@@ -70,7 +70,7 @@ class Usuario extends Persona {
             `, [id]);
     
             console.log('Model USUARIO: Resultado de la consulta:', usuario);
-            console.log('Model USUARIO TELEFONO: Resultado de la consulta:', telefonos);
+            console.log('Model: Resultado de la consulta:', telefonos);
     
             return { usuario: usuario[0], telefonos: telefonos[0] };
         } catch (error) {

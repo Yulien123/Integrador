@@ -1,0 +1,10 @@
+extends ../layout
+
+block contenido
+    .container
+        h1 Especialidades
+        ul.list-group
+            each especialidad in especialidades
+                li.list-group-item
+                    a(href=`/especialidades/${especialidad.id}`)= especialidad.nombre
+        a.btn.btn-primary(href="/especialidades/new") Add New Especialidad

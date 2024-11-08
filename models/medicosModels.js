@@ -16,7 +16,14 @@ class Medico extends Usuario {
         try {
             conn = await createConnection();
             const [medicos] = await conn.query(`
-                SELECT u.id, u.dni, p.nombre, p.apellido, p.nacimiento, u.email, u.password, u.id_rol, m.estado, GROUP_CONCAT(DISTINCT e.nombre SEPARATOR ', ') AS especialidades, GROUP_CONCAT(DISTINCT me.matricula SEPARATOR ', ') AS matriculas, GROUP_CONCAT(DISTINCT t.numero SEPARATOR ', ') AS telefonos FROM medicos m JOIN usuarios u ON m.id_usuario = u.id JOIN personas p ON u.dni = p.dni LEFT JOIN medico_especialidad me ON m.id_usuario = me.id_medico LEFT JOIN especialidades e ON me.id_especialidad = e.id LEFT JOIN telefonos t ON u.id = t.id_usuario GROUP BY u.id;
+                SELECT u.id, u.dni, p.nombre, p.apellido, p.nacimiento, u.email, u.password, 
+                u.id_rol, m.estado, GROUP_CONCAT(DISTINCT e.nombre SEPARATOR ', ') AS especialidades, 
+                GROUP_CONCAT(DISTINCT me.matricula SEPARATOR ', ') AS matriculas, GROUP_CONCAT(DISTINCT t.numero SEPARATOR ', ') 
+                AS telefonos FROM medicos m JOIN usuarios u ON m.id_usuario = u.id JOIN personas p ON u.dni = p.dni 
+                LEFT JOIN medico_especialidad me ON m.id_usuario = me.id_medico 
+                LEFT JOIN especialidades e ON me.id_especialidad = e.id 
+                LEFT JOIN telefonos t ON u.id = t.id_usuario 
+                GROUP BY u.id;
             `);
 
             return medicos.map(medico => new Medico(
@@ -190,7 +197,7 @@ class Medico extends Usuario {
         }
     }
     
-    //Acctivo
+    //inactivo
     static async activarMedico(id) {
         console.log('Model Medico: activar medico');
         try {
